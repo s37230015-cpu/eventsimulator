@@ -58,7 +58,7 @@ function renderEventExecution() {
           <h1>🚀 Event Execution</h1>
           <p>Fase Execution & Monitoring: Jalankan Event & Handle Risiko</p>
         </div>
-        <button class="btn-primary" onclick="window.location.hash = '#/review'">Lanjut ke Review →</button>
+        <button class="btn-primary" id="btn-to-review">Lanjut ke Review →</button>
       </div>
 
       <div class="execution-phases" id="execution-phases"></div>
@@ -68,6 +68,16 @@ function renderEventExecution() {
       <div class="monitoring-stats" id="monitoring-stats"></div>
     </div>
   `;
+
+  // Add event listener for review button
+  setTimeout(() => {
+    const reviewBtn = byId('btn-to-review');
+    if (reviewBtn) {
+      reviewBtn.addEventListener('click', () => {
+        window.location.hash = '#/review';
+      });
+    }
+  }, 100);
 
   renderExecutionPhases();
   renderRiskManagement(risks);
@@ -113,47 +123,76 @@ function renderExecutionPhases() {
   ];
 
   const phasesDiv = byId('execution-phases');
+  if (!phasesDiv) return;
+
   phasesDiv.innerHTML = phases
     .map(
-      (p) => `
-    <button class="phase-btn ${gameState.currentPhase === 'execution' ? 'active' : ''}" data-phase="${p.phase}">
+      (p, idx) => `
+    <button class="phase-btn ${idx === 0 ? 'active' : ''}" data-phase="${p.phase}" data-index="${idx}">
       ${p.title.split(' ')[0]} ${p.title.split(' ')[1]}
     </button>
   `
     )
     .join('');
 
-  phasesDiv.querySelectorAll('.phase-btn').forEach((btn) => {
+  const buttons = phasesDiv.querySelectorAll('.phase-btn');
+  buttons.forEach((btn) => {
     btn.addEventListener('click', () => {
-      const phaseIndex = phases.findIndex((p) => p.phase === btn.dataset.phase);
+      // Remove active from all buttons
+      buttons.forEach(b => b.classList.remove('active'));
+      // Add active to clicked button
+      btn.classList.add('active');
+      
+      const phaseIndex = parseInt(btn.dataset.index);
       renderExecutionStep(phases[phaseIndex]);
     });
   });
 
+  // Render first phase
   renderExecutionStep(phases[0]);
 }
 
 function renderExecutionStep(step) {
   const container = byId('execution-step');
+  if (!container) return;
+
   container.innerHTML = `
-    <h2>${step.title}</h2>
-    <div class="checklist">
-      ${step.tasks.map((task, idx) => `
-        <div class="checklist-item">
-          <input type="checkbox" id="checklist-${idx}">
-          <label for="checklist-${idx}">${task}</label>
-        </div>
-      `).join('')}
+    <div class="execution-step">
+      <h2>${step.title}</h2>
+      <div class="checklist">
+        ${step.tasks.map((task, idx) => `
+          <div class="checklist-item">
+            <input type="checkbox" id="checklist-${idx}">
+            <label for="checklist-${idx}">${task}</label>
+          </div>
+        `).join('')}
+      </div>
+      <button class="btn-primary" id="complete-phase-btn">✓ Fase Selesai</button>
     </div>
-    <button class="btn-primary" onclick="gameState.currentPhase = 'closing'; saveGameState(); window.location.hash = '#/review';">✓ Fase Selesai</button>
   `;
+
+  // Add event listener after rendering
+  setTimeout(() => {
+    const completeBtn = byId('complete-phase-btn');
+    if (completeBtn) {
+      completeBtn.addEventListener('click', () => {
+        gameState.currentPhase = 'closing';
+        saveGameState();
+        window.location.hash = '#/review';
+      });
+    }
+  }, 50);
 }
 
 function renderRiskManagement(risks) {
   const container = byId('risk-management');
+  if (!container) return;
+
   container.innerHTML = '<h2>⚠️ Risk Management</h2><div class="risks-grid" id="risks-grid"></div>';
 
   const risksGrid = byId('risks-grid');
+  if (!risksGrid) return;
+
   risks.forEach((risk) => {
     const card = createElement('div', 'risk-card');
     card.innerHTML = `
@@ -176,39 +215,57 @@ function renderRiskManagement(risks) {
     `;
     risksGrid.appendChild(card);
 
-    const triggerBtn = card.querySelector('.btn-trigger');
-    const mitigateBtn = card.querySelector('.btn-mitigate');
+    // Add event listeners with timeout to ensure DOM is ready
+    setTimeout(() => {
+      const triggerBtn = card.querySelector('.btn-trigger');
+      const mitigateBtn = card.querySelector('.btn-mitigate');
 
-    triggerBtn.addEventListener('click', () => {
-      triggerBtn.classList.add('hidden');
-      mitigateBtn.classList.remove('hidden');
-      gameState.monitoring.qualityScore -= 10;
-      addExecutionLog(`Risk triggered: ${risk.title}`, 'warning');
-      saveGameState();
-      renderMonitoringStats();
-      renderExecutionLog();
-    });
+      if (triggerBtn) {
+        triggerBtn.addEventListener('click', () => {
+          triggerBtn.classList.add('hidden');
+          mitigateBtn.classList.remove('hidden');
+          gameState.monitoring.qualityScore = Math.max(0, gameState.monitoring.qualityScore - 10);
+          addExecutionLog(`Risk triggered: ${risk.title}`, 'warning');
+          saveGameState();
+          renderMonitoringStats();
+          renderExecutionLog();
+          showToast(`⚠️ Risk triggered: ${risk.title}`, 'warning');
+        });
+      }
 
-    mitigateBtn.addEventListener('click', () => {
-      triggerBtn.classList.remove('hidden');
-      mitigateBtn.classList.add('hidden');
-      gameState.monitoring.qualityScore += 5;
-      addExecutionLog(`Risk mitigated: ${risk.title}`, 'success');
-      saveGameState();
-      renderMonitoringStats();
-      renderExecutionLog();
-    });
+      if (mitigateBtn) {
+        mitigateBtn.addEventListener('click', () => {
+          triggerBtn.classList.remove('hidden');
+          mitigateBtn.classList.add('hidden');
+          gameState.monitoring.qualityScore = Math.min(100, gameState.monitoring.qualityScore + 5);
+          addExecutionLog(`Risk mitigated: ${risk.title}`, 'success');
+          saveGameState();
+          renderMonitoringStats();
+          renderExecutionLog();
+          showToast(`✓ Risk mitigated: ${risk.title}`, 'success');
+        });
+      }
+    }, 50);
   });
 }
 
 function renderExecutionLog() {
   const container = byId('execution-log');
+  if (!container) return;
+
   container.innerHTML = `
     <h2>📝 Execution Log</h2>
     <div class="log-entries" id="log-entries"></div>
   `;
 
   const entries = byId('log-entries');
+  if (!entries) return;
+
+  // Initialize log if empty
+  if (gameState.executionLog.length === 0) {
+    addExecutionLog('Event execution started', 'info');
+  }
+
   gameState.executionLog.forEach((entry) => {
     const entryDiv = createElement('div', `log-entry severity-${entry.severity}`);
     entryDiv.innerHTML = `
@@ -221,20 +278,27 @@ function renderExecutionLog() {
 
 function renderMonitoringStats() {
   const container = byId('monitoring-stats');
+  if (!container) return;
+
+  // Ensure values are valid
+  const qualityScore = Math.max(0, Math.min(100, gameState.monitoring.qualityScore || 100));
+  const clientSatisfaction = Math.max(0, Math.min(100, gameState.monitoring.clientSatisfaction || 100));
+  const timelineAdherence = Math.max(0, Math.min(100, gameState.monitoring.timelineAdherence || 100));
+
   container.innerHTML = `
     <h2>📊 Current Monitoring Status</h2>
     <div class="stat-cards">
       <div class="stat-card">
         <p class="stat-label">Quality Score</p>
-        <p class="stat-value">${Math.max(0, gameState.monitoring.qualityScore)}/100</p>
+        <p class="stat-value">${qualityScore}/100</p>
       </div>
       <div class="stat-card">
         <p class="stat-label">Client Satisfaction</p>
-        <p class="stat-value">${gameState.monitoring.clientSatisfaction}/100</p>
+        <p class="stat-value">${clientSatisfaction}/100</p>
       </div>
       <div class="stat-card">
         <p class="stat-label">Timeline Adherence</p>
-        <p class="stat-value">${gameState.monitoring.timelineAdherence}%</p>
+        <p class="stat-value">${timelineAdherence}%</p>
       </div>
     </div>
   `;
