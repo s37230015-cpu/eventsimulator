@@ -1,0 +1,227 @@
+.resource-management-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.resource-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+  color: var(--white);
+  border-radius: var(--border-radius);
+}
+
+.resource-header h1 {
+  margin: 0;
+}
+
+.resource-header p {
+  margin: 0.5rem 0 0 0;
+  opacity: 0.9;
+}
+
+.budget-overview {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.budget-card {
+  background: var(--white);
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-md);
+  text-align: center;
+}
+
+.budget-card h3 {
+  color: var(--gray-dark);
+  margin: 0 0 0.75rem 0;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+}
+
+.budget-card.total {
+  background: linear-gradient(135deg, var(--light-blue), #d4e5f7);
+  border: 2px solid var(--primary-blue);
+}
+
+.budget-card.spent {
+  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+  border: 2px solid var(--warning);
+}
+
+.budget-card.remaining {
+  background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+  border: 2px solid var(--success);
+}
+
+.budget-card.remaining.warning {
+  background: linear-gradient(135deg, #ffebee, #ffcdd2);
+  border: 2px solid var(--danger);
+}
+
+.amount {
+  margin: 0;
+  color: var(--primary-blue);
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.percentage,
+.status {
+  margin: 0.5rem 0 0 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.budget-bar {
+  width: 100%;
+  height: 30px;
+  background: var(--gray-light);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-md);
+}
+
+.bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-blue), var(--secondary-blue));
+  transition: width 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 1rem;
+  color: var(--white);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.vendor-selection {
+  background: var(--white);
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-md);
+  margin-bottom: 2rem;
+}
+
+.vendor-selection h2 {
+  color: var(--primary-blue);
+  margin-top: 0;
+}
+
+.vendor-categories {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1.5rem;
+}
+
+.vendor-category h3 {
+  color: var(--primary-blue);
+  margin: 0 0 1rem 0;
+  font-size: 1rem;
+}
+
+.vendor-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.vendor-card {
+  background: var(--light-blue);
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  border: 2px solid var(--secondary-blue);
+  transition: var(--transition);
+}
+
+.vendor-card:hover {
+  border-color: var(--primary-blue);
+  box-shadow: var(--shadow-md);
+}
+
+.vendor-name {
+  margin: 0 0 0.5rem 0;
+  font-weight: 600;
+  color: var(--gray-dark);
+  font-size: 0.9rem;
+}
+
+.vendor-price {
+  margin: 0 0 0.75rem 0;
+  color: var(--primary-blue);
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.budget-items-section {
+  background: var(--white);
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-md);
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.section-header h2 {
+  margin: 0;
+  color: var(--primary-blue);
+}
+
+.budget-form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  padding: 1.5rem;
+  background: var(--gray-light);
+  border-radius: var(--border-radius);
+  margin-bottom: 1.5rem;
+}
+
+.budget-table {
+  width: 100%;
+}
+
+.budget-table select {
+  padding: 0.5rem;
+  border: 1px solid var(--gray-medium);
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.btn-negotiate {
+  background: var(--warning);
+  color: var(--white);
+  padding: 0.4rem 0.8rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-negotiate:hover {
+  background: #f57c00;
+}
+
+@media (max-width: 1024px) {
+  .budget-overview {
+    grid-template-columns: 1fr;
+  }
+
+  .vendor-categories {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

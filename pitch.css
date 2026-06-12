@@ -1,0 +1,277 @@
+.pitch-negotiation-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.pn-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+  color: var(--white);
+  border-radius: var(--border-radius);
+}
+
+.pn-header h1 {
+  margin: 0;
+}
+
+.pn-header p {
+  margin: 0.5rem 0 0 0;
+  opacity: 0.9;
+}
+
+.pn-tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid var(--gray-medium);
+}
+
+.tab {
+  background: transparent;
+  border: none;
+  padding: 1rem 1.5rem;
+  color: var(--gray-dark);
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+}
+
+.tab:hover {
+  color: var(--primary-blue);
+}
+
+.tab.active {
+  color: var(--primary-blue);
+  border-bottom-color: var(--primary-blue);
+}
+
+.pitch-section,
+.negotiation-section {
+  display: grid;
+  gap: 2rem;
+}
+
+.scenario-card {
+  background: var(--white);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+
+.scenario-header {
+  background: linear-gradient(135deg, var(--light-blue), #d4e5f7);
+  padding: 1.5rem;
+  border-left: 5px solid var(--primary-blue);
+}
+
+.scenario-header h3 {
+  margin: 0;
+  color: var(--primary-blue);
+}
+
+.offer-text {
+  margin: 0.5rem 0 0 0;
+  font-size: 0.9rem;
+  color: var(--gray-dark);
+  font-weight: 600;
+}
+
+.scenario-content {
+  padding: 2rem;
+}
+
+.scenario-text {
+  font-size: 1.05rem;
+  color: var(--gray-dark);
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.questions-section,
+.pitch-tips,
+.negotiation-tips {
+  background: var(--light-blue);
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  margin-bottom: 1.5rem;
+}
+
+.questions-section h4,
+.pitch-tips h4,
+.negotiation-tips h4 {
+  color: var(--primary-blue);
+  margin-top: 0;
+}
+
+.questions-section ul,
+.pitch-tips ul,
+.negotiation-tips ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.questions-section li,
+.pitch-tips li,
+.negotiation-tips li {
+  padding: 0.5rem 0;
+  color: var(--gray-dark);
+}
+
+.pitch-actions {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.btn-poor,
+.btn-good,
+.btn-excellent {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: var(--border-radius);
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  flex: 1;
+  min-width: 150px;
+}
+
+.btn-poor {
+  background: #ffebee;
+  color: var(--danger);
+  border: 2px solid var(--danger);
+}
+
+.btn-poor:hover {
+  background: var(--danger);
+  color: var(--white);
+}
+
+.btn-good {
+  background: #fff3e0;
+  color: var(--warning);
+  border: 2px solid var(--warning);
+}
+
+.btn-good:hover {
+  background: var(--warning);
+  color: var(--white);
+}
+
+.btn-excellent {
+  background: #e8f5e9;
+  color: var(--success);
+  border: 2px solid var(--success);
+}
+
+.btn-excellent:hover {
+  background: var(--success);
+  color: var(--white);
+}
+
+.pitch-result,
+.negotiation-result {
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  margin-bottom: 1.5rem;
+}
+
+.pitch-result.score-20,
+.pitch-result.score-40,
+.pitch-result.score-60 {
+  background: #ffebee;
+  border: 2px solid var(--danger);
+  color: var(--danger);
+}
+
+.pitch-result.score-80,
+.pitch-result.score-100 {
+  background: #e8f5e9;
+  border: 2px solid var(--success);
+  color: var(--success);
+}
+
+.negotiation-result.score-60 {
+  background: #fff3e0;
+  border: 2px solid var(--warning);
+  color: var(--warning);
+}
+
+.negotiation-result.score-80,
+.negotiation-result.score-90 {
+  background: #e8f5e9;
+  border: 2px solid var(--success);
+  color: var(--success);
+}
+
+.negotiation-strategies {
+  margin-bottom: 1.5rem;
+}
+
+.negotiation-strategies h4 {
+  color: var(--primary-blue);
+  margin: 0 0 1rem 0;
+}
+
+.strategies {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.strategy-option {
+  background: var(--gray-light);
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  text-align: center;
+  border: 2px solid transparent;
+  transition: var(--transition);
+}
+
+.strategy-option:hover {
+  border-color: var(--primary-blue);
+}
+
+.strategy-option h5 {
+  color: var(--primary-blue);
+  margin: 0 0 0.5rem 0;
+}
+
+.strategy-option p {
+  margin: 0 0 1rem 0;
+  font-size: 0.9rem;
+  color: var(--gray-dark);
+}
+
+.btn-strategy {
+  background: var(--primary-blue);
+  color: var(--white);
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.btn-strategy:hover {
+  background: var(--secondary-blue);
+}
+
+@media (max-width: 1024px) {
+  .pitch-actions {
+    flex-direction: column;
+  }
+
+  .strategies {
+    grid-template-columns: 1fr;
+  }
+}
